@@ -1,0 +1,30 @@
+@url = http://localhost:8000/api
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MjI4ZDIwMDc2NzE3NDQ2YTBjNTkiLCJpYXQiOjE2MTAyMTA0MDgsImV4cCI6MTYxMDI5NjgwOH0.96t6R6Sbpw9UWGC4D0VEXdKpjPkgT7qghq8zCR6eDRw
+
+POST {{url}}/admin/signin
+Content-Type: application/json
+
+{
+   "username" : "admin",
+   "password" : "1234567"
+}
+
+###
+GET {{url}}/admin/getAllUser
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/admin/getUser/5ff40d023311b43234f62031
+Authorization: Bearer {{token}}
+
+###
+PUT {{url}}/admin/updateUser/dasdsada
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "active" : true
+}
+
+###

@@ -1,7 +1,9 @@
 const User = require('../models/admin');
+const UserManagement = require('../models/user');
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -102,5 +104,64 @@ exports.adminMiddleware = (req, res, next) => {
 
         req.profile = user;
         next();
+    });
+};
+
+exports.getAllUser = (req, res) => {
+    UserManagement.find({}).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get all user list", allUser
+        });
+});
+};
+
+exports.getOnePlayer = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+
+    UserManagement.findOne({ _id: slug }).exec((err, players) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'USER not found'
+            });
+        }
+        res.json(players);
+    });
+};
+
+exports.updateUser = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    var myquery = { _id: slug }
+    var newV = req.body;
+    UserManagement.updateOne(myquery, newV).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'cant update user'
+            });
+        }
+        res.json("Message: Successfully updated" + slug);
+    });
+};
+
+
+exports.wallets = (req, res) => {
+    let DateCreated = new Date().getTime();
+    let timestamp = new Date().getTime();
+    const { VanSalesID, SKUID, PieceQuantity, CaseQuantity, TotalQuantity, CreatedBy } = req.body;
+    let completeId = new inventoryI({ VanSalesID, SKUID, PieceQuantity, CaseQuantity, TotalQuantity, DateCreated, CreatedBy, timestamp });
+
+
+    completeId.save((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: err.errmsg
+            });
+        }
+
+        res.json('Success : Added one'); // dont do this res.json({ tag: data });
     });
 };
