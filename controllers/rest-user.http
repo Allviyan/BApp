@@ -1,0 +1,32 @@
+@url = http://localhost:8000/api
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MTAxZDMzMTFiNDMyMzRmNjIwMzIiLCJpYXQiOjE2MTAzNDc3ODQsImV4cCI6MTYxMDQzNDE4NH0.tGdYuiHQRtnsxK0IupNAzQs2ZPuggi4uiPi5Wlkvz-Y
+
+### User Signin ###
+POST {{url}}/signin
+Content-Type: application/json
+
+{
+   "MobileNumber" : "09881234455",
+   "password" : "12345678"
+}
+
+### Add wallet ##
+POST {{url}}/user/getWallet/:slug
+Content-Type: application/json
+
+{
+   "MobileNumber" : "09881234455",
+   "password" : "12345678"
+}
+
+### Get Wallet ###
+GET {{url}}/user/getWallet/5ff4107d20076717446a0c58
+Authorization: Bearer {{token}}
+
+### Request wallet load ###
+POST 
+
+### USER PROFILE ###
+GET {{url}}/user/profile/5ff4107d20076717446a0c58
+Authorization: Bearer {{token}}

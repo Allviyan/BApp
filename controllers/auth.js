@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const wallets = require('../models/wallet')
+const RequestWallets = require('../models/wallet_transaction')
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
@@ -151,3 +153,53 @@ exports.updateUser = (req, res) => {
         res.json(data.nModified + " Activated Operator");
     });
 };
+
+exports.wallets = (req, res) => {
+
+    console.log(req)
+    const { OwnerID, Balance, Status, Owner} = req.body;
+    let completeId = new wallets({ OwnerID, Balance, Status, Owner });
+
+
+    completeId.save((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: err.errmsg
+            });
+        }
+
+        res.json('Success : Added one'); // dont do this res.json({ tag: data });
+    });
+};
+
+exports.getOneUserWallet = (req, res) => {
+    
+    const slug = req.params.slug.toLowerCase();
+    console.log(slug)
+    wallets.findOne({ OwnerID: slug }).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get One user wallet", allUser
+        });
+});
+};
+
+exports.getUserProfile = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    console.log(slug)
+    User.findOne({ _id: slug }).exec((err, allUser) => {
+        if (err) {  
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get One user wallet", allUser
+        });
+});
+};
+

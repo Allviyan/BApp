@@ -1,5 +1,6 @@
 const User = require('../models/admin');
 const UserManagement = require('../models/user');
+const wallets = require('../models/wallet')
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
@@ -151,8 +152,8 @@ exports.updateUser = (req, res) => {
 exports.wallets = (req, res) => {
     let DateCreated = new Date().getTime();
     let timestamp = new Date().getTime();
-    const { VanSalesID, SKUID, PieceQuantity, CaseQuantity, TotalQuantity, CreatedBy } = req.body;
-    let completeId = new inventoryI({ VanSalesID, SKUID, PieceQuantity, CaseQuantity, TotalQuantity, DateCreated, CreatedBy, timestamp });
+    const { OwnerID, Balance, Status, Owner} = req.body;
+    let completeId = new wallets({ OwnerID, Balance, Status, Owner });
 
 
     completeId.save((err, data) => {
@@ -163,5 +164,62 @@ exports.wallets = (req, res) => {
         }
 
         res.json('Success : Added one'); // dont do this res.json({ tag: data });
+    });
+};
+
+exports.getWallets = (req, res) => {
+    wallets.find({}).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get all user list", allUser
+        });
+});
+};
+
+exports.getOneWallet = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    console.log(slug)
+    wallets.findOne({ _id: slug }).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get One user wallet", allUser
+        });
+});
+};
+
+exports.getOneUserWallet = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    console.log(slug)
+    wallets.findOne({ OwnerID: slug }).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get One user wallet", allUser
+        });
+});
+};
+
+exports.updateOneWallet = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    var myquery = { _id: slug }
+    var newV = req.body;
+    wallets.updateOne(myquery, newV).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'cant update user'
+            });
+        }
+        res.json("Message: Successfully updated" + slug);
     });
 };

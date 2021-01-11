@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-const { stubFalse } = require('lodash');
-const { StringDecoder } = require('string_decoder');
 
 const walletsSchema = new mongoose.Schema(
     {
@@ -12,11 +9,11 @@ const walletsSchema = new mongoose.Schema(
             max: 32
         },
         Balance: {
-            type: Double,
+            type: Number,
             required: true
         },
         Status: {
-            type: Double,
+            type: Boolean,
             default: 0
         },
         Owner:{
