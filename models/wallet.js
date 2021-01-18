@@ -5,12 +5,13 @@ const walletsSchema = new mongoose.Schema(
         
         OwnerID: {
             type: String,
-
+            required: true,
             max: 32
         },
         Balance: {
             type: Number,
-            required: true
+            default: 0
+            
         },
         Status: {
             type: Boolean,
@@ -18,6 +19,9 @@ const walletsSchema = new mongoose.Schema(
         },
         Owner:{
             type:String
+        },
+        DateCreated:{
+            type:Date
         }       
         
     },

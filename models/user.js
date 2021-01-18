@@ -57,7 +57,10 @@ const userSchema = new mongoose.Schema(
         resetPasswordLink: {
             data: String,
             default: ''
-        }
+        },
+        DateCreated:{
+            type:Date
+        } 
     },
     { timestamp: true }
 );

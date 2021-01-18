@@ -27,6 +27,9 @@ const walletTransactionSchema = new mongoose.Schema(
         Status: {
             type: Boolean,
             default: 0
+        },
+        TransactionDate:{
+            type:Date
         }     
         
     },

@@ -10,15 +10,17 @@ exports.signup = (req, res) => {
     User.findOne({ email: req.body.email }).exec((err, user) => {
         if (user) {
             return res.status(400).json({
-                error: 'Email is taken'
+                err: 'Email is taken'
             });
         }
+
         var active = 0;
         const { Firstname, Lastname, MobileNumber, email, password  } = req.body;
         let username = shortId.generate();
         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-
-        let newUser = new User({ Firstname, Lastname,MobileNumber, email, password, profile, username, active });
+        let DateCreated = new Date();
+        console.log(DateCreated)
+        let newUser = new User({ Firstname, Lastname,MobileNumber, email, password, profile, username, active, DateCreated});
         newUser.save((err, success) => {
             if (err) {
                 return res.status(400).json({
@@ -28,6 +30,24 @@ exports.signup = (req, res) => {
             // res.json({
             //     user: success
             // });
+
+            User.findOne().limit(1).sort({$natural:-1}).exec((err, user) => {
+                let OwnerID = user._id;
+                let Owner = user.Firstname + " " + user.Lastname
+                let Balance 
+                let Status 
+
+                let newWallet = new wallets({ OwnerID, Balance, Status, Owner, DateCreated});
+                console.log(OwnerID, Owner)
+                newWallet.save((err, success) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: err
+                    });
+                }
+                });
+            });
+
             res.json({
                 message: 'Signup success! Please signin.'
             });

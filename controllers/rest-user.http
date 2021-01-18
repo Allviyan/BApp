@@ -2,6 +2,21 @@
 
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MTAxZDMzMTFiNDMyMzRmNjIwMzIiLCJpYXQiOjE2MTAzNDc3ODQsImV4cCI6MTYxMDQzNDE4NH0.tGdYuiHQRtnsxK0IupNAzQs2ZPuggi4uiPi5Wlkvz-Y
 
+## User Registration ##
+POST {{url}}/signup
+Content-Type: application/json
+
+{
+    "Firstname" : "Clark",
+    "Lastname" : "Kent",
+    "email" : "clark.kent@gmails.com",
+    "MobileNumber" : "43453543543",
+    "ReferralNumber" : "",
+    "password" : "12345678"
+ 
+
+}
+
 ### User Signin ###
 POST {{url}}/signin
 Content-Type: application/json
