@@ -7,10 +7,10 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-    "Firstname" : "Clark",
-    "Lastname" : "Kent",
-    "email" : "clark.kent@gmails.com",
-    "MobileNumber" : "43453543543",
+    "Firstname" : "Leona",
+    "Lastname" : "lewis",
+    "email" : "Leona.lewis@gmails.com",
+    "MobileNumber" : "765765234",
     "ReferralNumber" : "",
     "password" : "12345678"
  
@@ -22,7 +22,7 @@ POST {{url}}/signin
 Content-Type: application/json
 
 {
-   "MobileNumber" : "09881234455",
+   "MobileNumber" : "43453543543",
    "password" : "12345678"
 }
 

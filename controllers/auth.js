@@ -90,7 +90,7 @@ exports.signout = (req, res) => {
     });
 };
 
-exports.requireSignin = expressJwt({
+exports.requireSigninUser = expressJwt({
     secret: process.env.JWT_SECRET
 });
 

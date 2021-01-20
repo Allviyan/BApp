@@ -44,7 +44,7 @@ GET {{url}}/admin/getWallets
 Authorization: Bearer {{token}}
 
 ### get one user wallets ###
-GET {{url}}/admin/wallet/getOne/5ffbea4f30fe04390ca5adc9
+GET {{url}}/admin/wallet/getOne/60052f7eb813601ee8a66a62
 Authorization: Bearer {{token}}
 
 

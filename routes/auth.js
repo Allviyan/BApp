@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signup, signin, signout, requireSignin, wallets, getOneUserWallet, getUserProfile} = require('../controllers/auth');
+const { signup, signin, signout, requireSigninUser, wallets, getOneUserWallet, getUserProfile} = require('../controllers/auth');
 
 // validators
 const { runValidation } = require('../validators');
@@ -11,9 +11,9 @@ router.post('/signin', userSigninValidator, runValidation, signin);
 router.get('/signout', signout);
 
 
-router.get('/user/getWallet/:slug', requireSignin, getOneUserWallet);
-router.get('/user/profile/:slug', requireSignin, getUserProfile);
-router.post('/user/addWallet', requireSignin, wallets)
+router.get('/user/getWallet/:slug', requireSigninUser, getOneUserWallet);
+router.get('/user/profile/:slug', requireSigninUser, getUserProfile);
+router.post('/user/addWallet', requireSigninUser, wallets)
 
 
 // test
