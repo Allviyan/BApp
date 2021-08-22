@@ -12,13 +12,13 @@ const adminSchema = new mongoose.Schema(
             index: true,
             lowercase: true
         },
-        Firstname: {
+        firstName: {
             type: String,
             trim: true,
             required: true,
             max: 32
         },
-        Lastname: {
+        lastName: {
             type: String,
             trim: true,
             required: true,
@@ -37,10 +37,9 @@ const adminSchema = new mongoose.Schema(
             unique: true,
             lowercase: true
         },
-        MobileNumber: {
+        mobileNumber: {
             type: String,
             trim: true,
-            required: true,
             unique: true,
             lowercase: true
         },
@@ -69,7 +68,7 @@ const adminSchema = new mongoose.Schema(
             default: ''
         },
 
-        Createdat: {
+        createDate: {
             type: String,
             trim: true
         },

@@ -1,18 +1,14 @@
 const { check } = require('express-validator');
 
 exports.userSignupValidator = [
-    check('Firstname')
+    check('firstName')
         .not()
         .isEmpty()
         .withMessage('Firstname is required'),
-    check('Lastname')
+    check('lastName')
         .not()
         .isEmpty()
         .withMessage('Lastname is required'),
-    check('MobileNumber')
-        .not()
-        .isEmpty()
-        .withMessage('MobileNumber is required'),
     check('email')
         .isEmail()
         .withMessage('Must be a valid email address'),
@@ -55,7 +51,7 @@ exports.operatorSignupValidator = [
         .withMessage('Password must be at least 6 characters long')
 ];
 exports.userSigninValidator = [
-    check('MobileNumber')
+    check('mobileNumber')
         .not()
         .isEmpty()
         .withMessage('Must be a valid MobileNumbers'),
@@ -76,26 +72,14 @@ exports.operatorSigninValidator = [
 
 
 exports.adminSignupValidator = [
-    check('Firstname')
+    check('firstName')
         .not()
         .isEmpty()
         .withMessage('Firstname is required'),
-    check('Lastname')
+    check('lastName')
         .not()
         .isEmpty()
-        .withMessage('Lastname is required'),
-    check('Businessname')
-        .not()
-        .isEmpty()
-        .withMessage('Businessname is required'),
-    check('address')
-        .not()
-        .isEmpty()
-        .withMessage('address is required'),          
-    check('MobileNumber')
-        .not()
-        .isEmpty()
-        .withMessage('Phone is required'),
+        .withMessage('Lastname is required'),          
     check('email')
         .isEmail()
         .withMessage('Must be a valid email address'),

@@ -3,27 +3,31 @@ const mongoose = require('mongoose');
 const walletsSchema = new mongoose.Schema(
     {
         
-        OwnerID: {
+        ownerID: {
             type: String,
             required: true,
             max: 32
         },
-        Balance: {
+        balance: {
             type: Number,
             default: 0
-            
         },
-        Status: {
+        status: {
             type: Boolean,
             default: 0
         },
-        Owner:{
+        owner:{
             type:String
         },
-        DateCreated:{
+        dateCreated:{
             type:Date
-        }       
-        
+        },
+        updatedBy:{
+            type:String
+        },
+        requestId: {
+            type: String
+        }
     },
     { timestamp: true }
 );

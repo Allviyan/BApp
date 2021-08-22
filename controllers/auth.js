@@ -4,6 +4,9 @@ const RequestWallets = require('../models/wallet_transaction')
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+var request = require("request");
+var md5s = require("md5");
+
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -15,42 +18,95 @@ exports.signup = (req, res) => {
         }
 
         var active = 0;
-        const { Firstname, Lastname, MobileNumber, email, password  } = req.body;
+        const { firstName, lastName, mobileNumber, email, password  } = req.body;
         let username = shortId.generate();
+        var date = new Date;
+        var userId = String(date.getTime()).substring( 4 );;
+  
+       console.log("dasda : " + userId)
         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
         let DateCreated = new Date();
         console.log(DateCreated)
-        let newUser = new User({ Firstname, Lastname,MobileNumber, email, password, profile, username, active, DateCreated});
+        let newUser = new User({ userId, firstName, lastName, mobileNumber, email, password, profile, username, active, DateCreated});
         newUser.save((err, success) => {
             if (err) {
                 return res.status(400).json({
                     error: err
                 });
             }
+            console.log("dasdasdas " + err)
             // res.json({
             //     user: success
             // });
 
             User.findOne().limit(1).sort({$natural:-1}).exec((err, user) => {
-                let OwnerID = user._id;
-                let Owner = user.Firstname + " " + user.Lastname
-                let Balance 
-                let Status 
+                let ownerID = user.userId;
+                let owner = user.firstName + " " + user.lastName
+                let balance 
+                let status 
 
-                let newWallet = new wallets({ OwnerID, Balance, Status, Owner, DateCreated});
-                console.log(OwnerID, Owner)
+                let newWallet = new wallets({ ownerID, balance, status, owner, DateCreated});
+                console.log(ownerID, owner)
                 newWallet.save((err, success) => {
                 if (err) {
                     return res.status(400).json({
                         error: err
                     });
                 }
-                });
-            });
+        
 
-            res.json({
-                message: 'Signup success! Please signin.'
-            });
+            var API_URL = 'https://api.prerelease-env.biz/IntegrationService/v3/http/CasinoGameAPI' + '/player/account/create/';
+            var secureLogin = "eexim_euroexim";
+            var secretKeyHash = "testKey";
+            var res = 'testKey';
+            var secretKey = 'PragmaticPlay';
+            var externalPlayerId= ownerID;
+            
+            var stringParam = "currency=" + 'CNY' +
+            "&externalPlayerId=" + externalPlayerId +
+            "&secureLogin=" + secureLogin + secretKeyHash;
+            
+            var hashedKey = md5s(stringParam);
+            
+            
+            var opts = {
+              url: API_URL,
+              qs : {
+                currency: 'CNY',
+                externalPlayerId: externalPlayerId,
+                secureLogin: secureLogin,
+                hash: hashedKey
+              },
+              headers:{
+                "Content-Type": "x-www-form-urlencoded"
+              },
+              json: true
+            };
+            
+            // request.post(opts, function(err, result) {
+            //   if (err) {
+            //     console.log("Pragmatic@addUser - error on post ", err);
+            //   }
+            //   console.log(result);
+              
+            
+            // });
+            
+            request.post(opts, function(error, response, body){
+               console.log(body);
+            
+
+
+         
+    });
+});   
+
+res.json({
+    message: 'Signup success! Please signin.',
+    userId : ownerID,
+    onwenerName : owner
+});
+});
         });
     });
 };
@@ -75,10 +131,10 @@ exports.signin = (req, res) => {
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         res.cookie('token', token, { expiresIn: '1d' });
-        const { _id, username, name, email, role } = user;
+        const { _id, username, name, email, userId } = user;
         return res.json({
             token,
-            user: { _id, username, name, email, role }
+            user: { _id, username, name, email, userId }
         });
     });
 };

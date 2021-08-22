@@ -2,6 +2,22 @@
 
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MjI4ZDIwMDc2NzE3NDQ2YTBjNTkiLCJpYXQiOjE2MTA5NTI3OTYsImV4cCI6MTYxMTAzOTE5Nn0.iM3q03VhfnIR8ahM8KWeDnJvxuP3dkSeILrP3UGEeos
 
+## User Registration ##
+POST {{url}}/admin/signup
+Content-Type: application/json
+
+{   
+    "username" : "admin",
+    "firstName" : "admin",
+    "lastName" : "admin",
+    "email" : "admin@euGaming.com",
+    "MobileNumber" : "765765234",
+    "password" : "12345678",
+    "address" : "adssadas"
+ 
+}
+
+###
 POST {{url}}/admin/signin
 Content-Type: application/json
 

@@ -3,14 +3,17 @@ const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema(
     {
-
-        Firstname: {
+        userId: {
+            type: String,
+            required: true
+        },
+        firstName: {
             type: String,
             trim: true,
             required: true,
             max: 32
         },
-        Lastname: {
+        lastName: {
             type: String,
             trim: true,
             required: true,
@@ -23,14 +26,14 @@ const userSchema = new mongoose.Schema(
             unique: true,
             lowercase: true
         },
-        MobileNumber: {
+        mobileNumber: {
             type: String,
             trim: true,
             required: true,
             unique: true,
             lowercase: true
         },
-        ReferralNumber: {
+        referralNumber: {
             type: String,
             trim:true
         },

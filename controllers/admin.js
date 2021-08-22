@@ -15,11 +15,11 @@ exports.signup = (req, res) => {
             });
         }
 
-        const { Firstname, Lastname,Businessname,address, email,MobileNumber,username,password  } = req.body;
+        const { firstName, lastName, address, email,mobileNumber,username,password  } = req.body;
        
         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
         let Createdat = new Date().getTime();
-        let newUser = new User({ Firstname, Lastname,Businessname,address, email,MobileNumber, password, profile, username, Createdat });
+        let newUser = new User({ firstName, lastName, address, email,mobileNumber,profile,username,password });
         newUser.save((err, success) => {
             if (err) {
                 return res.status(400).json({

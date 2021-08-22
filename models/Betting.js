@@ -2,41 +2,41 @@ const mongoose = require('mongoose');
 
 const bettingSchema = new mongoose.Schema(
     {
-        Amount: {
+        amount: {
             type: Number,
             default: 0
             
         },
-        Side: {
+       side: {
             type: String,
             required: true
         },
-        OwnerID: {
+        ownerID: {
             type: String,
             required: true,
             max: 32
         },
-        FightID: {
+        fightID: {
             type: String,
             required: true,
             max: 32
         },
-        EventID: {
+        eventID: {
             type: String,
             required: true,
             max: 32
         },
-        Status: {
+        status: {
             type: Boolean,
             default: 0
         },
-        DateCreated:{
+       dateCreated:{
             type:Date
         },
-        DateUpdated:{
+        dateUpdated:{
             type:Date
         },
-        DateDeleted:{
+        dateDeleted:{
             type:Date
         }       
         
