@@ -58,7 +58,7 @@ exports.signup = (req, res) => {
             var API_URL = 'https://api.prerelease-env.biz/IntegrationService/v3/http/CasinoGameAPI' + '/player/account/create/';
             var secureLogin = "eexim_euroexim";
             var secretKeyHash = "testKey";
-            var res = 'testKey';
+            var resdsds = 'testKey';
             var secretKey = 'PragmaticPlay';
             var externalPlayerId= ownerID;
             
@@ -91,21 +91,22 @@ exports.signup = (req, res) => {
               
             
             // });
-            
+
             request.post(opts, function(error, response, body){
                console.log(body);
             
-
+               return res.json({
+                message: 'Signup success! Please signin.',
+                userId : ownerID,
+                onwenerName : owner,
+                ppid: body.playerId
+            });
 
          
     });
 });   
 
-res.json({
-    message: 'Signup success! Please signin.',
-    userId : ownerID,
-    onwenerName : owner
-});
+
 });
         });
     });

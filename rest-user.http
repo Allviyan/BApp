@@ -7,10 +7,10 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-    "firstName" : "Leona",
-    "lastName" : "lewis",
-    "email" : "Leona.lewis@gmails.com",
-    "mobileNumber" : "765765234",
+    "firstName" : "Leona6",
+    "lastName" : "lewis6",
+    "email" : "Leona.lewis6@gmails.com",
+    "mobileNumber" : "324234234263",
     "referralNumber" : "",
     "password" : "12345678"
  
@@ -32,17 +32,31 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-   "userId" : 638699556,
-   "gameCode" : "vs25hotfiesta"
+   "userId" : 718843360,
+   "gameCode" : "vs5drhs"
+}
+
+### Get Wallet ###
+POST {{url}}/user/reloadPPwallet/ppgames
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "userId" : 718843360,
+   "amountP" : 100
 }
 
 
 
-
 ### Get Wallet ###
-GET {{url}}/user/getbalance/ppgames/638699556
+GET {{url}}/user/getbalance/ppgames/718843360
 Authorization: Bearer {{token}}
 
+
+
+### Get Wallet ###
+GET {{url}}/user/getGameTransaction/ppgames
+Authorization: Bearer {{token}}
 
 
 ### Add wallet ##

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { signup, signin, signout, requireSigninUser, wallets, getOneUserWallet, getUserProfile} = require('../controllers/auth');
-const {getUserBalance, getGameLink} = require('../controllers/ppgames'); 
+const {getUserBalance, getGameLink, getGameTransaction, reloadBalancePP} = require('../controllers/ppgames'); 
 // validators
 const { runValidation } = require('../validators');
 const { userSignupValidator, userSigninValidator } = require('../validators/auth');
@@ -16,6 +16,8 @@ router.get('/user/profile/:slug', requireSigninUser, getUserProfile);
 router.post('/user/addWallet', requireSigninUser, wallets)
 router.get('/user/getbalance/ppgames/:slug', requireSigninUser, getUserBalance)
 router.post('/user/getgameslink/ppgames', requireSigninUser, getGameLink)
+router.get('/user/getGameTransaction/ppgames', requireSigninUser, getGameTransaction)
+router.post('/user/reloadPPwallet/ppgames', requireSigninUser, reloadBalancePP)
 // test
 // router.get('/secret', requireSignin, (req, res) => {
 //     res.json({
