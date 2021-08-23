@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MTAxZDMzMTFiNDMyMzRmNjIwMzIiLCJpYXQiOjE2MTAzNDc3ODQsImV4cCI6MTYxMDQzNDE4NH0.tGdYuiHQRtnsxK0IupNAzQs2ZPuggi4uiPi5Wlkvz-Y
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2Mjk2NDM0MTcsImV4cCI6MTYyOTcyOTgxN30.E-FuQ3mHyqn6_HQ5rZWhgNbJfyj0F_oYYPIRokE83n4
 
 ## User Registration ##
 POST {{url}}/signup
@@ -25,6 +25,25 @@ Content-Type: application/json
    "mobileNumber" : "765765234",
    "password" : "12345678"
 }
+
+### Get Wallet ###
+POST {{url}}/user/getgameslink/ppgames
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "userId" : 638699556,
+   "gameCode" : "vs25hotfiesta"
+}
+
+
+
+
+### Get Wallet ###
+GET {{url}}/user/getbalance/ppgames/638699556
+Authorization: Bearer {{token}}
+
+
 
 ### Add wallet ##
 POST {{url}}/user/getWallet/:slug
