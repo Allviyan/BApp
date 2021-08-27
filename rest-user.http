@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2Mjk2NDM0MTcsImV4cCI6MTYyOTcyOTgxN30.E-FuQ3mHyqn6_HQ5rZWhgNbJfyj0F_oYYPIRokE83n4
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzAwNzUwODMsImV4cCI6MTYzMDE2MTQ4M30.jQ6rjYqSNSOTESsYo8qY-dIeEKKtq1My8sieaO9lFbU
 
 ## User Registration ##
 POST {{url}}/signup
@@ -50,12 +50,6 @@ Content-Type: application/json
 
 ### Get Wallet ###
 GET {{url}}/user/getbalance/ppgames/718843360
-Authorization: Bearer {{token}}
-
-
-
-### Get Wallet ###
-GET {{url}}/user/getGameTransaction/ppgames
 Authorization: Bearer {{token}}
 
 

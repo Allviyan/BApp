@@ -16,7 +16,6 @@ router.get('/user/profile/:slug', requireSigninUser, getUserProfile);
 router.post('/user/addWallet', requireSigninUser, wallets)
 router.get('/user/getbalance/ppgames/:slug', requireSigninUser, getUserBalance)
 router.post('/user/getgameslink/ppgames', requireSigninUser, getGameLink)
-router.get('/user/getGameTransaction/ppgames', requireSigninUser, getGameTransaction)
 router.post('/user/reloadPPwallet/ppgames', requireSigninUser, reloadBalancePP)
 // test
 // router.get('/secret', requireSignin, (req, res) => {
