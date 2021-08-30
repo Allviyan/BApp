@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 var request = require("request");
 var md5s = require("md5");
-
+var moment = require("moment");
+const _ = require('lodash');
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -116,6 +117,7 @@ exports.signin = (req, res) => {
     const { MobileNumber, password } = req.body;
     // check if user exist
     User.findOne({ MobileNumber }).exec((err, user) => {
+
         console.log("dasda", user)
         if (err || !user) {
             return res.status(400).json({
@@ -133,10 +135,14 @@ exports.signin = (req, res) => {
 
         res.cookie('token', token, { expiresIn: '1d' });
         const { _id, username, name, email, userId } = user;
+        wallets.findOne({ ownerID : userId}).exec((err, userWallet) => {
+        const { balance } = userWallet;
+     
         return res.json({
             token,
-            user: { _id, username, name, email, userId }
+            user: { _id, username, balance,  name, email, userId }
         });
+    });
     });
 };
 
@@ -233,9 +239,22 @@ exports.updateUser = (req, res) => {
 
 exports.wallets = (req, res) => {
 
-    console.log(req)
-    const { OwnerID, Balance, Status, Owner} = req.body;
-    let completeId = new wallets({ OwnerID, Balance, Status, Owner });
+    const { playerID, amount, transType } = req.body;
+    User.findOne({ userId: playerID }).exec((err, user) => {
+        if (_.isEmpty(user)) {
+            return res.status(400).json({
+                err: 'User not found'
+            });
+        }
+      var transactionPrefix = "Uwr";
+      var type = transType;
+      var referenceNumber = transactionPrefix + moment().format("x");
+      var transactionDate  = moment().format("x");
+      var owner = user.firstName + " " + user.lastName
+       var walletId = playerID;
+    //var referenceTransactionId = 'Uwr' + String(date.getTime()).substring( 4 );
+    
+    let completeId = new RequestWallets({ referenceNumber, type, walletId, amount, owner, transactionDate });
 
 
     completeId.save((err, data) => {
@@ -244,16 +263,73 @@ exports.wallets = (req, res) => {
                 error: err.errmsg
             });
         }
+        console.log(err)
 
-        res.json('Success : Added one'); // dont do this res.json({ tag: data });
+        res.json('Success : Added user reqest wallets, please wait for the finance team to verify your request!'); // dont do this res.json({ tag: data });
     });
+});
 };
+
+exports.getOneUserWalletRequest = (req, res) => {
+    
+    const slug = req.params.slug.toLowerCase();
+    RequestWallets.find({ walletId: slug }).exec((err, allUser) => {
+        if (_.isEmpty(allUser)) {
+            return res.status(400).json({
+                err: 'wallet not found'
+            });
+        }
+
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get One user walle request status", allUser
+        });
+});
+};
+
+
+exports.updateUserRequestWallet = (req, res) => {
+    
+    const slug = req.params.slug;
+
+    RequestWallets.findOne({ referenceNumber: slug }).exec((err, user) => {
+        if (_.isEmpty(user)) {
+            return res.status(400).json({
+                err: 'transaction not found'
+            });
+        }
+
+        if(user.status =='Granted!'){
+            return res.status(400).json({
+                err: 'transaction cannot be updated , because it has been granted!'
+            });
+        }
+        
+    var myquery = { referenceNumber: slug }
+    var status = req.body.status;
+    var transactionDate = moment().format("x");
+    var newStatus = {status, transactionDate} 
+    RequestWallets.updateOne(myquery, newStatus).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'cant update user'
+            });
+        }
+        res.json("Message: Successfully updated status to " + status);
+    });
+});
+};
+
 
 exports.getOneUserWallet = (req, res) => {
     
     const slug = req.params.slug.toLowerCase();
     console.log(slug)
-    wallets.findOne({ OwnerID: slug }).exec((err, allUser) => {
+    wallets.find({ ownerID: slug }).exec((err, allUser) => {
         if (err) {
             return res.status(400).json({
                 error: 'inventory not found'
@@ -280,3 +356,15 @@ exports.getUserProfile = (req, res) => {
 });
 };
 
+exports.getOwnWallets = (req, res) => {
+    wallets.findOne({}).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get all user list", allUser
+        });
+});
+};

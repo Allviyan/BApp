@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzAwNzUwODMsImV4cCI6MTYzMDE2MTQ4M30.jQ6rjYqSNSOTESsYo8qY-dIeEKKtq1My8sieaO9lFbU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzAzMDIxNjEsImV4cCI6MTYzMDM4ODU2MX0.PYjYd4xlI1uhCvzAAaXv5SE3GCORLt-Gc7xs9znJR94
 
 ## User Registration ##
 POST {{url}}/signup
@@ -53,21 +53,38 @@ GET {{url}}/user/getbalance/ppgames/718843360
 Authorization: Bearer {{token}}
 
 
-### Add wallet ##
-POST {{url}}/user/getWallet/:slug
+### get wallet balance##
+GET {{url}}/user/getWallet/638699556
+Authorization: Bearer {{token}}
+
+
+### get wallet balance##
+GET {{url}}/user/request/balance/638699556
+Authorization: Bearer {{token}}
+
+### Add wallet request ##
+POST {{url}}/user/addWallet
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-   "MobileNumber" : "09881234455",
-   "password" : "12345678"
+"playerID" : 638699556, 
+"amount" : 100,
+"transType" : "Deposit"
 }
 
-### Get Wallet ###
-GET {{url}}/user/getWallet/5ff4107d20076717446a0c58
-Authorization: Bearer {{token}}
+###
 
-### Request wallet load ###
-POST 
+PUT {{url}}/user/updateUserWalletRequest/Uwr1630306356609
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+"status" : "Cancel"
+}
+
+
+
 
 ### USER PROFILE ###
 GET {{url}}/user/profile/5ff4107d20076717446a0c58

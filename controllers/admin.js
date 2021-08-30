@@ -4,7 +4,9 @@ const wallets = require('../models/wallet')
 const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
-
+const RequestWallets = require('../models/wallet_transaction')
+const _ = require('lodash');
+var moment = require("moment");
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -46,12 +48,7 @@ exports.signin = (req, res) => {
                 error: 'Username does not exist. Please signup.'
             });
         }
-        // authenticate
-        if (!user.authenticate(password)) {
-            return res.status(400).json({
-                error: 'Email and password do not match.'
-            });
-        }
+
         // generate a token and send to client
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
@@ -149,23 +146,23 @@ exports.updateUser = (req, res) => {
 };
 
 
-exports.wallets = (req, res) => {
-    let DateCreated = new Date().getTime();
-    let timestamp = new Date().getTime();
-    const { OwnerID, Balance, Status, Owner} = req.body;
-    let completeId = new wallets({ OwnerID, Balance, Status, Owner });
+// exports.wallets = (req, res) => {
+//     let DateCreated = new Date().getTime();
+//     let timestamp = new Date().getTime();
+//     const { OwnerID, Balance, Status, Owner} = req.body;
+//     let completeId = new wallets({ OwnerID, Balance, Status, Owner });
 
 
-    completeId.save((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: err.errmsg
-            });
-        }
+//     completeId.save((err, data) => {
+//         if (err) {
+//             return res.status(400).json({
+//                 error: err.errmsg
+//             });
+//         }
 
-        res.json('Success : Added one'); // dont do this res.json({ tag: data });
-    });
-};
+//         res.json('Success : Added one'); // dont do this res.json({ tag: data });
+//     });
+// };
 
 exports.getWallets = (req, res) => {
     wallets.find({}).exec((err, allUser) => {
@@ -210,16 +207,56 @@ exports.getOneUserWallet = (req, res) => {
 });
 };
 
-exports.updateOneWallet = (req, res) => {
-    const slug = req.params.slug.toLowerCase();
-    var myquery = { _id: slug }
-    var newV = req.body;
-    wallets.updateOne(myquery, newV).exec((err, tag) => {
-        if (err) {
+exports.updatePlayerWalletRequest = (req, res) => {
+    const slug = req.params.slug;
+
+    RequestWallets.findOne({ referenceNumber: slug }).exec((err, user) => {
+        if (_.isEmpty(user)) {
             return res.status(400).json({
-                error: 'cant update user'
+                err: 'transaction not found'
             });
         }
-        res.json("Message: Successfully updated" + slug);
-    });
+            
+        if(user.status =='Granted!'){
+            return res.status(400).json({
+                err: 'transaction cannot be updated , because it has been granted!'
+            });
+        }
+        var userWalletId = (user.walletId);    
+    wallets.findOne({ ownerID: userWalletId }).exec((err, walletUser) => {
+        var existingLoad = walletUser.balance;
+        var myquery = { referenceNumber: slug }
+        var status = req.body.status;
+        var balance = (user.amount + existingLoad);
+        console.log("check :" + user.amount + existingLoad)
+        var requestId = "Arp" + moment().format("x");
+        var transactionDate = moment().format("x");
+        var dateCreated = moment().format("x");
+        var newStatus = {status, transactionDate}
+        var myqueryUserWallet = { ownerID: userWalletId }
+        var updatedBy = 'admin'; 
+        var updateWallet = {dateCreated, updatedBy, balance, requestId}
+        RequestWallets.updateOne(myquery, newStatus).exec((err, tag) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'cant update user'
+                });
+            }
+            
+            
+            wallets.updateOne(myqueryUserWallet, updateWallet).exec((err, tag) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: 'cant update user'
+                    });
+                }
+
+            });
+
+            
+            res.json("Message: Successfully updated status to " + status);
+        });
+
+});
+});
 };

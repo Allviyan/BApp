@@ -6,31 +6,35 @@ const { StringDecoder } = require('string_decoder');
 const walletTransactionSchema = new mongoose.Schema(
     {
         
-        ReferenceNumber: {
+        referenceNumber: {
             type: String,
-            max: 32
+            max: 50
         },
-        Type: {
+        type: {
             type: String,
             max:10
         },
         
-        WalletId:{
+        walletId:{
             type:String
         },      
-        Amount: {
+        amount: {
             type: Number
         },
-        Owner:{
+        owner:{
             type:String
         },
-        Status: {
-            type: Boolean,
-            default: 0
+        status: {
+            type: String,
+            default: 'Pending'
         },
-        TransactionDate:{
+        transactionDate:{
             type:Date
-        }     
+        },
+        reason:{
+            type:String
+        }    
+           
         
     },
     { timestamp: true }
