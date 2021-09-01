@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzAzMDIxNjEsImV4cCI6MTYzMDM4ODU2MX0.PYjYd4xlI1uhCvzAAaXv5SE3GCORLt-Gc7xs9znJR94
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzA0MTk5NDgsImV4cCI6MTYzMDUwNjM0OH0.hXN2UsTs4LI_C4vXg1fjh8pkw88SSNDw4nS0radNV5Q
 
 ## User Registration ##
 POST {{url}}/signup
@@ -42,8 +42,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-   "userId" : 718843360,
-   "amountP" : 100
+   "userId" : 638699556,
+   "amountP" : 5000,
+   "transaction" : "IN"
 }
 
 
@@ -75,7 +76,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{url}}/user/updateUserWalletRequest/Uwr1630306356609
+PUT {{url}}/user/updateUserWalletRequest/Uwr1630306337922
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

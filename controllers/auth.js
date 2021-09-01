@@ -8,6 +8,7 @@ var request = require("request");
 var md5s = require("md5");
 var moment = require("moment");
 const _ = require('lodash');
+const e = require('express');
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -114,9 +115,10 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-    const { MobileNumber, password } = req.body;
+    const { mobileNumber, password } = req.body;
     // check if user exist
-    User.findOne({ MobileNumber }).exec((err, user) => {
+    console.log("check! " + mobileNumber)
+    User.findOne({ mobileNumber }).exec((err, user) => {
 
         console.log("dasda", user)
         if (err || !user) {
@@ -241,17 +243,29 @@ exports.wallets = (req, res) => {
 
     const { playerID, amount, transType } = req.body;
     User.findOne({ userId: playerID }).exec((err, user) => {
+        
         if (_.isEmpty(user)) {
             return res.status(400).json({
                 err: 'User not found'
             });
         }
+
+        if(transType =='Withdraw') {
+        wallets.findOne({ ownerID: playerID }).exec((err, walletUser) => {   
+        if( amount > walletUser.balance){
+            return res.status(400).json({
+                err: 'transaction cannot continue because amount requested is higher than existing balance'
+            });
+        }
+
+           
       var transactionPrefix = "Uwr";
       var type = transType;
       var referenceNumber = transactionPrefix + moment().format("x");
       var transactionDate  = moment().format("x");
       var owner = user.firstName + " " + user.lastName
        var walletId = playerID;
+
     //var referenceTransactionId = 'Uwr' + String(date.getTime()).substring( 4 );
     
     let completeId = new RequestWallets({ referenceNumber, type, walletId, amount, owner, transactionDate });
@@ -268,6 +282,32 @@ exports.wallets = (req, res) => {
         res.json('Success : Added user reqest wallets, please wait for the finance team to verify your request!'); // dont do this res.json({ tag: data });
     });
 });
+        } else {
+      var transactionPrefix = "Uwr";
+      var type = transType;
+      var referenceNumber = transactionPrefix + moment().format("x");
+      var transactionDate  = moment().format("x");
+      var owner = user.firstName + " " + user.lastName
+       var walletId = playerID;
+
+    //var referenceTransactionId = 'Uwr' + String(date.getTime()).substring( 4 );
+    
+    let completeId = new RequestWallets({ referenceNumber, type, walletId, amount, owner, transactionDate });
+
+
+    completeId.save((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: err.errmsg
+            });
+        }
+        console.log(err)
+
+        res.json('Success : Added user reqest wallets, please wait for the finance team to verify your request!'); // dont do this res.json({ tag: data });
+    });
+}  
+});
+
 };
 
 exports.getOneUserWalletRequest = (req, res) => {
@@ -276,7 +316,7 @@ exports.getOneUserWalletRequest = (req, res) => {
     RequestWallets.find({ walletId: slug }).exec((err, allUser) => {
         if (_.isEmpty(allUser)) {
             return res.status(400).json({
-                err: 'wallet not found'
+                err: 'theres no wallet transfer request!'
             });
         }
 

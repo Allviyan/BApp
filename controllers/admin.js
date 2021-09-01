@@ -219,44 +219,86 @@ exports.updatePlayerWalletRequest = (req, res) => {
             
         if(user.status =='Granted!'){
             return res.status(400).json({
-                err: 'transaction cannot be updated , because it has been granted!'
+                err: 'transaction cannot be updated that has been granted!'
             });
         }
-        var userWalletId = (user.walletId);    
-    wallets.findOne({ ownerID: userWalletId }).exec((err, walletUser) => {
-        var existingLoad = walletUser.balance;
-        var myquery = { referenceNumber: slug }
-        var status = req.body.status;
-        var balance = (user.amount + existingLoad);
-        console.log("check :" + user.amount + existingLoad)
-        var requestId = "Arp" + moment().format("x");
-        var transactionDate = moment().format("x");
-        var dateCreated = moment().format("x");
-        var newStatus = {status, transactionDate}
-        var myqueryUserWallet = { ownerID: userWalletId }
-        var updatedBy = 'admin'; 
-        var updateWallet = {dateCreated, updatedBy, balance, requestId}
-        RequestWallets.updateOne(myquery, newStatus).exec((err, tag) => {
-            if (err) {
-                return res.status(400).json({
-                    error: 'cant update user'
-                });
-            }
-            
-            
-            wallets.updateOne(myqueryUserWallet, updateWallet).exec((err, tag) => {
-                if (err) {
-                    return res.status(400).json({
-                        error: 'cant update user'
+
+        if(user.type =='Withdraw') {
+                var userWalletId = (user.walletId);    
+                wallets.findOne({ ownerID: userWalletId }).exec((err, walletUser) => {
+                var existingLoad = walletUser.balance;
+                var myquery = { referenceNumber: slug }
+                var status = req.body.status;
+                console.log("test " + existingLoad - user.amount)
+                var balance = (existingLoad - user.amount);
+                var requestId = "Arp" + moment().format("x");
+                var transactionDate = moment().format("x");
+                var dateCreated = moment().format("x");
+                var newStatus = {status, transactionDate}
+                var myqueryUserWallet = { ownerID: userWalletId }
+                var updatedBy = 'admin'; 
+                var updateWallet = {dateCreated, updatedBy, balance, requestId}
+                RequestWallets.updateOne(myquery, newStatus).exec((err, tag) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'cant update transaction wallet'
+                        });
+                    }
+                    
+                    
+                    wallets.updateOne(myqueryUserWallet, updateWallet).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'cant update user wallet'
+                            });
+                        }
+        
                     });
-                }
-
-            });
-
-            
-            res.json("Message: Successfully updated status to " + status);
+        
+                    
+                    res.json("Message: Successfully withdraw " + " previous ammount :" + existingLoad + " current ammount :" +  balance);
+                });
+        
         });
 
-});
+        } else {
+            var userWalletId = (user.walletId);    
+            wallets.findOne({ ownerID: userWalletId }).exec((err, walletUser) => {
+                var existingLoad = walletUser.balance;
+                var myquery = { referenceNumber: slug }
+                var status = req.body.status;
+                var balance = (user.amount + existingLoad);
+                var requestId = "Arp" + moment().format("x");
+                var transactionDate = moment().format("x");
+                var dateCreated = moment().format("x");
+                var newStatus = {status, transactionDate}
+                var myqueryUserWallet = { ownerID: userWalletId }
+                var updatedBy = 'admin'; 
+                var updateWallet = {dateCreated, updatedBy, balance, requestId}
+                RequestWallets.updateOne(myquery, newStatus).exec((err, tag) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'cant update transaction wallet'
+                        });
+                    }
+                    
+                    
+                    wallets.updateOne(myqueryUserWallet, updateWallet).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'cant update user wallet'
+                            });
+                        }
+        
+                    });
+        
+                    
+                    res.json("Message: Successfully updated status to " + status + " previous ammount :" + existingLoad + " previous ammount :" +  balance);
+                });
+        
+        });
+        }
+
+        
 });
 };
