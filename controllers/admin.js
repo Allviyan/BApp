@@ -319,7 +319,7 @@ exports.getOneWalletRequest = (req, res) => {
 
     const slug = req.params.slug;
     RequestWallets.findOne({userId: slug }).exec((err, allUser) => {
-        if (_.isEmpty(user)) {
+        if (_.isEmpty(allUser)) {
             return res.status(400).json({
                 err: 'transaction not found'
             });
