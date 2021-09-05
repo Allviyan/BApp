@@ -1,7 +1,7 @@
 const { request } = require('express');
 const express = require('express');
 const router = express.Router();
-const { signup, signin, signout, requireSignin, getAllUser, getOneUserWallet, updateOneWallet, getOneWallet, getOnePlayer, getWallets, wallets, updateUser, updatePlayerWalletRequest } = require('../controllers/admin');
+const { signup, signin, signout, requireSignin, getAllUser, getOneUserWallet, updateOneWallet, getOneWallet, getOnePlayer, getWallets, wallets, updateUser, updatePlayerWalletRequest, getOneWalletRequest, getWalletsRequest } = require('../controllers/admin');
 const { userList, readUser } = require('../controllers/auth');
 //const { userList, readUser } = require('../controllers/auth');
 // validators
@@ -20,6 +20,8 @@ router.get('/admin/getWallets', requireSignin, getWallets)
 router.get('/admin/wallet/getOne/:slug', requireSignin, getOneWallet)
 router.get('/admin/wallet/getOne/user/:slug', requireSignin, getOneUserWallet)
 
+router.get('/admin/walletRequest/getAll/user/:slug', requireSignin, getWalletsRequest)
+router.get('/admin/walletRequest/getOne/user/:slug', requireSignin, getOneWalletRequest)
 router.put('/admin/requested/wallet/update/:slug', requireSignin, updatePlayerWalletRequest)
 // router.put('/admin/wallet/updateOne/:slug', requireSignin, updateOneWallet)
 

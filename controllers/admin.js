@@ -121,7 +121,7 @@ exports.getAllUser = (req, res) => {
 exports.getOnePlayer = (req, res) => {
     const slug = req.params.slug.toLowerCase();
 
-    UserManagement.findOne({ _id: slug }).exec((err, players) => {
+    UserManagement.findOne({ userId: slug }).exec((err, players) => {
         if (err) {
             return res.status(400).json({
                 error: 'USER not found'
@@ -133,7 +133,7 @@ exports.getOnePlayer = (req, res) => {
 
 exports.updateUser = (req, res) => {
     const slug = req.params.slug.toLowerCase();
-    var myquery = { _id: slug }
+    var myquery = { userId: slug }
     var newV = req.body;
     UserManagement.updateOne(myquery, newV).exec((err, tag) => {
         if (err) {
@@ -299,5 +299,39 @@ exports.updatePlayerWalletRequest = (req, res) => {
         }
 
         
+});
+};
+
+exports.getWalletsRequest = (req, res) => {
+    RequestWallets.find({}).exec((err, allUser) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get all user wallet request", allUser
+        });
+});
+};
+
+exports.getOneWalletRequest = (req, res) => {
+
+    const slug = req.params.slug;
+    RequestWallets.findOne({userId: slug }).exec((err, allUser) => {
+        if (_.isEmpty(user)) {
+            return res.status(400).json({
+                err: 'transaction not found'
+            });
+        }
+
+        if (err) {
+            return res.status(400).json({
+                error: 'inventory not found'
+            });
+        }
+        res.json({
+            "identifier": "get all user wallet request", allUser
+        });
 });
 };
