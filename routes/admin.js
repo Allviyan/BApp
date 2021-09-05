@@ -20,7 +20,7 @@ router.get('/admin/getWallets', requireSignin, getWallets)
 router.get('/admin/wallet/getOne/:slug', requireSignin, getOneWallet)
 router.get('/admin/wallet/getOne/user/:slug', requireSignin, getOneUserWallet)
 
-router.get('/admin/walletRequest/getAll/user/:slug', requireSignin, getWalletsRequest)
+router.get('/admin/walletRequest/getAll/user', requireSignin, getWalletsRequest)
 router.get('/admin/walletRequest/getOne/user/:slug', requireSignin, getOneWalletRequest)
 router.put('/admin/requested/wallet/update/:slug', requireSignin, updatePlayerWalletRequest)
 // router.put('/admin/wallet/updateOne/:slug', requireSignin, updateOneWallet)
