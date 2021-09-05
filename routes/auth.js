@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signup, signin, signout, requireSigninUser, wallets, getOneUserWallet, getUserProfile, getOneUserWalletRequest, updateUserRequestWallet} = require('../controllers/auth');
+const { signup, signin, signout, requireSigninUser, wallets, getOneUserWallet, getUserProfile, getOneUserWalletRequest, updateUserRequestWallet, updateUserProfile} = require('../controllers/auth');
 const {getUserBalance, getGameLink, getGameTransaction, reloadBalancePP} = require('../controllers/ppgames'); 
 // validators
 const { runValidation } = require('../validators');
@@ -13,6 +13,7 @@ router.get('/signout', signout);
 
 router.get('/user/getWallet/:slug', requireSigninUser, getOneUserWallet);
 router.get('/user/profile/:slug', requireSigninUser, getUserProfile);
+router.put('/user/update/profile/:slug', requireSigninUser, updateUserProfile);
 router.post('/user/wallet', requireSigninUser, wallets)
 router.get('/user/request/balance/:slug', requireSigninUser, getOneUserWalletRequest)
 router.put('/user/updateUserWalletRequest/:slug', requireSigninUser, updateUserRequestWallet)

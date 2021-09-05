@@ -9,6 +9,7 @@ var md5s = require("md5");
 var moment = require("moment");
 const _ = require('lodash');
 const e = require('express');
+const { all } = require('../routes/auth');
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -383,28 +384,41 @@ exports.getOneUserWallet = (req, res) => {
 
 exports.getUserProfile = (req, res) => {
     const slug = req.params.slug.toLowerCase();
-    console.log(slug)
-    User.findOne({ _id: slug }).exec((err, allUser) => {
+
+    User.findOne({ userId: slug }).exec((err, allUser) => {
+        console.log(allUser)
         if (err) {  
             return res.status(400).json({
                 error: 'inventory not found'
             });
         }
+
+        let userId = allUser.userId;
+        let firstName = allUser.firstName;
+        let lastName = allUser.lastName;
+        let mobileNumber = allUser.mobileNumber;
+        let email = allUser.email;
+
         res.json({
-            "identifier": "get One user wallet", allUser
+            "identifier": "get One user profile", userId, firstName, lastName, mobileNumber, email 
         });
 });
 };
 
-exports.getOwnWallets = (req, res) => {
-    wallets.findOne({}).exec((err, allUser) => {
+
+exports.updateUserProfile = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    var myquery ={ userId: slug }
+    
+ 
+    var newV = req.body;
+
+    User.updateOne(myquery,newV).exec((err, data) => {
         if (err) {
             return res.status(400).json({
-                error: 'inventory not found'
+                error: errorHandler(err)
             });
         }
-        res.json({
-            "identifier": "get all user list", allUser
-        });
-});
+        res.json(data.nModified + " Updated User");
+    });
 };

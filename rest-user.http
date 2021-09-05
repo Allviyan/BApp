@@ -1,16 +1,16 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyNTAyYjMyYjcyOTI4ZDBkY2EzZmYiLCJpYXQiOjE2MzA0MTk5NDgsImV4cCI6MTYzMDUwNjM0OH0.hXN2UsTs4LI_C4vXg1fjh8pkw88SSNDw4nS0radNV5Q
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmNDJiMzAxMDgxOTA4ZTA5ZDgxM2IiLCJpYXQiOjE2MzA4NTE4OTgsImV4cCI6MTYzMDkzODI5OH0.6ccN3yP9hvn5kFeTYIazjtYPFEbupwtFXSlPC5PSj1w
 
 ## User Registration ##
 POST {{url}}/signup
 Content-Type: application/json
 
 {
-    "firstName" : "Leona6",
-    "lastName" : "lewis6",
-    "email" : "Leona.lewis6@gmails.com",
-    "mobileNumber" : "324234234263",
+    "firstName" : "angelo3",
+    "lastName" : "santiago3",
+    "email" : "angelo.santiago3@gmails.com",
+    "mobileNumber" : "090788388331",
     "referralNumber" : "",
     "password" : "12345678"
  
@@ -22,7 +22,7 @@ POST {{url}}/signin
 Content-Type: application/json
 
 {
-   "mobileNumber" : "765765234",
+   "mobileNumber" : "090788388331",
    "password" : "12345678"
 }
 
@@ -42,9 +42,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-   "userId" : 638699556,
-   "amountP" : 5000,
-   "transaction" : "IN"
+   "userId" : 718843360,
+   "amountP" : 100,
+   "transaction" : "OUT"
 }
 
 
@@ -55,12 +55,12 @@ Authorization: Bearer {{token}}
 
 
 ### get wallet balance##
-GET {{url}}/user/getWallet/638699556
+GET {{url}}/user/getWallet/718843360
 Authorization: Bearer {{token}}
 
 
 ### get wallet balance##
-GET {{url}}/user/request/balance/638699556
+GET {{url}}/user/request/balance/718843360
 Authorization: Bearer {{token}}
 
 ### Add wallet request ##
@@ -69,14 +69,14 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-"playerID" : 638699556, 
-"amount" : 100,
+"playerID" : 718843360, 
+"amount" : 1000,
 "transType" : "Deposit"
 }
 
 ###
 
-PUT {{url}}/user/updateUserWalletRequest/Uwr1630306337922
+PUT {{url}}/user/updateUserWalletRequest/Uwr1630852274927
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -88,5 +88,19 @@ Content-Type: application/json
 
 
 ### USER PROFILE ###
-GET {{url}}/user/profile/5ff4107d20076717446a0c58
+GET {{url}}/user/profile/718843360
 Authorization: Bearer {{token}}
+
+
+### USER PROFILE ###
+PUT {{url}}/user/update/profile/718843360
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+ "userId": "718843360",
+  "firstName": "Leona",
+  "lastName": "lewis",
+  "mobileNumber": "324234234263",
+  "email": "leona.lewis6@gmails.com"
+}
