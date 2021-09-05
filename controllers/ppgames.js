@@ -147,10 +147,6 @@ exports.reloadBalancePP = (req, res) => {
         "&externalPlayerId=" + externalPlayerId +
         "&externalTransactionId=" + externalTransactionId +
         "&secureLogin=" + resd + secretKeyHash;
-        // var stringParam = "currency=" + 'CNY' +
-        // "&externalPlayerId=" + externalPlayerId +
-        // "&secureLogin=" + secureLogin + secretKeyHash;
-        
         var hashedKey = md5s(stringParam);
         
         
@@ -178,8 +174,6 @@ exports.reloadBalancePP = (req, res) => {
   });
 });
         } else {
-          console.log("pasok! tite")
-      
           if( amountP > walletUser.balance){
             return res.status(400).json({
                 ERROR: 'transaction cannot continue because amount requested is higher than existing balance'

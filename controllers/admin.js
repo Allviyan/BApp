@@ -194,8 +194,7 @@ exports.getOneWallet = (req, res) => {
 
 exports.getOneUserWallet = (req, res) => {
     const slug = req.params.slug.toLowerCase();
-    console.log(slug)
-    wallets.findOne({ OwnerID: slug }).exec((err, allUser) => {
+    wallets.findOne({ ownerID: slug }).exec((err, allUser) => {
         if (err) {
             return res.status(400).json({
                 error: 'inventory not found'

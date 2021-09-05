@@ -13,7 +13,7 @@ router.get('/signout', signout);
 
 router.get('/user/getWallet/:slug', requireSigninUser, getOneUserWallet);
 router.get('/user/profile/:slug', requireSigninUser, getUserProfile);
-router.post('/user/addWallet', requireSigninUser, wallets)
+router.post('/user/wallet', requireSigninUser, wallets)
 router.get('/user/request/balance/:slug', requireSigninUser, getOneUserWalletRequest)
 router.put('/user/updateUserWalletRequest/:slug', requireSigninUser, updateUserRequestWallet)
 

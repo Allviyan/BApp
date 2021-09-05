@@ -1,0 +1,95 @@
+@url = http://localhost:8000/api
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzA0ODc2MzcsImV4cCI6MTYzMDU3NDAzN30.ZE7JGVu1Ccxw_cnXIv8dJkauH2z_PtZd0zKstjVkeAE
+
+## User Registration ##
+POST {{url}}/provider/signup
+Content-Type: application/json
+
+{   
+    "username" : "pragmatic",
+    "companyName" : "pragmatic inc",
+    "email" : "support@pragmatic.com",
+    "password" : "12345678"
+}
+
+###
+POST {{url}}/provider/signin
+Content-Type: application/json
+
+{
+   "username" : "pragmatic",
+   "password" : "123456"
+}
+
+###
+POST {{url}}/provider/token
+Content-Type: application/json
+
+{
+   "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmOTcwZGZjOGYwMTJhZWM0OTk5ODkiLCJpYXQiOjE2MzA2ODIzNjN9.7lvrWTZCmFRtWygy653h83MAyONgsQWrQb6N2U3Worg"
+}
+
+
+### get all user ###
+GET {{url}}/admin/getAllUser
+Authorization: Bearer {{token}}
+
+### get one user ###
+GET {{url}}/admin/getUser/5ff40d023311b43234f62031
+Authorization: Bearer {{token}}
+
+### update user status ###
+PUT {{url}}/admin/updateUser/5ff40d023311b43234f62031
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "active" : true
+}
+
+### Add User Wallet ###
+POST {{url}}/admin/wallet
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "OwnerID" : "5ff4107d20076717446a0c58", 
+    "Balance" : 2000, 
+    "Owner" : "dan.est@gmail.com"
+
+}
+
+### get all user wallets ###
+GET {{url}}/admin/getWallets
+Authorization: Bearer {{token}}
+
+### get one user wallets ###
+GET {{url}}/admin/wallet/getOne/60052f7eb813601ee8a66a62
+Authorization: Bearer {{token}}
+
+
+### update one user wallet ###
+PUT {{url}}/admin/wallet/updateOne/5ff4107d20076717446a0c58
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "OwnerID" : "5ff40d023311b43234f62031",
+    "Owner" : "sam.ekwe@gmail.com"
+}
+
+### get 1 user wallet ####
+GET {{url}}/admin/wallet/getOne/user/5ff4107d20076717446a0c58
+Authorization: Bearer {{token}}
+
+
+### get 1 user wallet ####
+PUT {{url}}/admin/requested/wallet/update/Uwr1630487665963
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+"status" : "Granted!"
+
+}

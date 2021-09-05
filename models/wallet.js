@@ -12,9 +12,17 @@ const walletsSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        status: {
-            type: Boolean,
+        balance: {
+            type: Number,
             default: 0
+        },
+        balance: {
+            type: Number,
+            default: 0
+        },
+        status: {
+            type: String,
+            default: 'Active'
         },
         owner:{
             type:String
