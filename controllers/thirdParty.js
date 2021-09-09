@@ -125,7 +125,9 @@ exports.getOneUserWallet = (req, res) => {
                 err: 'User not found'
             });
         }
-    })
+    
+
+    console.log(user)
     wallets.findOne({ ownerID: playerID }).exec((err, walletUser) => {   
         console.log("check " + walletUser)  
 
@@ -136,7 +138,6 @@ exports.getOneUserWallet = (req, res) => {
             } 
 
         var transactionPrefix = "PP-User-Bet";
-        var type = transType;
         var referenceNumber = transactionPrefix + moment().format("x");
         var transactionDate  = moment().format("x");
         var owner = user.firstName + " " + user.lastName
@@ -144,10 +145,11 @@ exports.getOneUserWallet = (req, res) => {
          var dateCreated = moment().format("x");
          var requestId = "Pragmatic" + moment().format("x");
          var updatedBy = 'pragmatic-seamless'; 
-         var balance = (existingLoad - user.amount);
+         var existingLoad = walletUser.balance || 0;
+         var balance = (existingLoad - amount);
          var myqueryUserWallet = { ownerID: playerID }
          var updateWallet = {dateCreated, updatedBy, balance, requestId}
-      
+        var type = 'userBet'
       let completeId = new RequestWallets({ referenceNumber, type, walletId, amount, owner, transactionDate });
   
   
@@ -157,9 +159,7 @@ exports.getOneUserWallet = (req, res) => {
                   error: err.errmsg
               });
           }
-          console.log(err)
-
-
+          
           wallets.updateOne(myqueryUserWallet, updateWallet).exec((err, tag) => {
             if (err) {
                 return res.status(400).json({
@@ -167,11 +167,11 @@ exports.getOneUserWallet = (req, res) => {
                 });
             }
 
-        });
-
           res.json('Success : Deduct wallet via Bet!'); // dont do this res.json({ tag: data });
       });
     });
+    });
+});
 }
 
 
