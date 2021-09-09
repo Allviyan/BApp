@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmY0MjI4ZDIwMDc2NzE3NDQ2YTBjNTkiLCJpYXQiOjE2MTA5NTI3OTYsImV4cCI6MTYxMTAzOTE5Nn0.iM3q03VhfnIR8ahM8KWeDnJvxuP3dkSeILrP3UGEeos
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzA4NTQ1MDUsImV4cCI6MTYzMDk0MDkwNX0.GO5JPYwVNWdyTLlyhKbmnSTiVxOrDbajKSIqouLdmUg
 
 ## User Registration ##
 POST {{url}}/admin/signup
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
    "username" : "admin",
-   "password" : "1234567"
+   "password" : "123456"
 }
 
 ### get all user ###
@@ -31,11 +31,11 @@ GET {{url}}/admin/getAllUser
 Authorization: Bearer {{token}}
 
 ### get one user ###
-GET {{url}}/admin/getUser/5ff40d023311b43234f62031
+GET {{url}}/admin/getUser/638699556
 Authorization: Bearer {{token}}
 
 ### update user status ###
-PUT {{url}}/admin/updateUser/5ff40d023311b43234f62031
+PUT {{url}}/admin/updateUser/638699556
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -76,4 +76,28 @@ Authorization: Bearer {{token}}
 
 ### get 1 user wallet ####
 GET {{url}}/admin/wallet/getOne/user/5ff4107d20076717446a0c58
+Authorization: Bearer {{token}}
+
+
+### get 1 user wallet ####
+PUT {{url}}/admin/requested/wallet/update/Uwr1630487665963
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+"status" : "Granted!"
+
+}
+
+### get 1 user wallet ####
+GET {{url}}/admin/walletRequest/getAll/user?status=pending&pagination=10&page=1
+Authorization: Bearer {{token}}
+
+### get 1 user wallet ####
+GET {{url}}/admin/walletRequest/getOne/user/Uwr1630484325343
+Authorization: Bearer {{token}}
+
+
+### get 1 user wallet ####
+GET {{url}}/admin/getWallets?status=false&pagination=10&page=1
 Authorization: Bearer {{token}}

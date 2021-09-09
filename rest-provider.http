@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzA0ODc2MzcsImV4cCI6MTYzMDU3NDAzN30.ZE7JGVu1Ccxw_cnXIv8dJkauH2z_PtZd0zKstjVkeAE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmOTcwZGZjOGYwMTJhZWM0OTk5ODkiLCJpYXQiOjE2MzExOTY1NTV9.E894YXSyxpK_PhNu-6zZ0nzA1SizSpet7-9Ak72KiLA
 
 ## User Registration ##
 POST {{url}}/provider/signup
@@ -22,18 +22,36 @@ Content-Type: application/json
    "password" : "123456"
 }
 
-###
-POST {{url}}/provider/token
-Content-Type: application/json
 
-{
-   "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmOTcwZGZjOGYwMTJhZWM0OTk5ODkiLCJpYXQiOjE2MzA2ODIzNjN9.7lvrWTZCmFRtWygy653h83MAyONgsQWrQb6N2U3Worg"
-}
 
 
 ### get all user ###
-GET {{url}}/admin/getAllUser
+GET {{url}}/provider/getUserWallet/718843360
 Authorization: Bearer {{token}}
+
+
+### POST Wallet ###
+POST {{url}}/provider/userBet
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "playerID" : 718843360,
+   "amount" : 100
+}
+
+
+### POST Wallet ###
+POST {{url}}/provider/winBet
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "playerID" : 718843360,
+   "amount" : 100,
+   "transType" : "Result"
+}
+
 
 ### get one user ###
 GET {{url}}/admin/getUser/5ff40d023311b43234f62031

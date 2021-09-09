@@ -165,16 +165,50 @@ exports.updateUser = (req, res) => {
 // };
 
 exports.getWallets = (req, res) => {
-    wallets.find({}).exec((err, allUser) => {
-        if (err) {
-            return res.status(400).json({
-                error: 'inventory not found'
+//     wallets.find({}).exec((err, allUser) => {
+//         if (err) {
+//             return res.status(400).json({
+//                 error: 'inventory not found'
+//             });
+//         }
+//         res.json({
+//             "identifier": "get all user list", allUser
+//         });
+// });
+    const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const Status = req.query.status;
+    if (Status) {
+        wallets.count({}).exec((err, total) => {
+            wallets.find({ $or: [{ status: { $regex: Status, $options: 'i' } }]})
+                    .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'Customer not found'
+                            });
+                        }
+                        res.json({
+                            "identifier": "get all user walletds", tag,
+                            pagination: tag.length, page, page, total
+                        });
+                    });
             });
-        }
-        res.json({
-            "identifier": "get all user list", allUser
+        } else{
+    wallets.count({}).exec((err, total) => {
+    wallets.find({})
+                .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'Customer not found'
+                        });
+                    }
+                    res.json({
+                        "identifier": "get all user wallets", tag,
+                        pagination: tag.length, page, page, total
+                    });
+                });
         });
-});
+    }  
 };
 
 exports.getOneWallet = (req, res) => {
@@ -228,7 +262,7 @@ exports.updatePlayerWalletRequest = (req, res) => {
                 var existingLoad = walletUser.balance;
                 var myquery = { referenceNumber: slug }
                 var status = req.body.status;
-                console.log("test " + existingLoad - user.amount)
+ 
                 var balance = (existingLoad - user.amount);
                 var requestId = "Arp" + moment().format("x");
                 var transactionDate = moment().format("x");
@@ -303,16 +337,50 @@ exports.updatePlayerWalletRequest = (req, res) => {
 };
 
 exports.getWalletsRequest = (req, res) => {
-    RequestWallets.find({}).exec((err, allUser) => {
-        if (err) {
-            return res.status(400).json({
-                error: 'inventory not found'
+//     RequestWallets.find({}).exec((err, allUser) => {
+//         if (err) {
+//             return res.status(400).json({
+//                 error: 'inventory not found'
+//             });
+//         }
+//         res.json({
+//             "identifier": "get all user wallet request", allUser
+//         });
+// });
+const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
+const page = req.query.page ? parseInt(req.query.page) : 1;
+const Status = req.query.status;
+if (Status) {
+RequestWallets.count({}).exec((err, total) => {
+RequestWallets.find({ $or: [{ status: { $regex: Status, $options: 'i' } }]})
+            .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: 'Customer not found'
+                    });
+                }
+                res.json({
+                    "identifier": "get all user wallets", tag,
+                    pagination: tag.length, page, page, total
+                });
             });
-        }
-        res.json({
-            "identifier": "get all user wallet request", allUser
-        });
-});
+    });
+} else{
+    RequestWallets.count({}).exec((err, total) => {
+        RequestWallets.find({})
+                    .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'Customer not found'
+                            });
+                        }
+                        res.json({
+                            "identifier": "get all user wallets", tag,
+                            pagination: tag.length, page, page, total
+                        });
+                    });
+            });
+}
 };
 
 exports.getOneWalletRequest = (req, res) => {
