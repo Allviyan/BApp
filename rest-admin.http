@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzA4NTQ1MDUsImV4cCI6MTYzMDk0MDkwNX0.GO5JPYwVNWdyTLlyhKbmnSTiVxOrDbajKSIqouLdmUg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzE1MTU0NjksImV4cCI6MTYzMTYwMTg2OX0.sPlnTvZJ0OXEcfBlVRRNxp4ubZyAK2M06Q9CFLFtFTo
 
 ## User Registration ##
 POST {{url}}/admin/signup
@@ -55,8 +55,23 @@ Authorization: Bearer {{token}}
 
 }
 
+
+### Add User Wallet ###
+POST {{url}}/admin/add-games
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "englishGameName" : "Baccarat Lobby", 
+    "chineseGameName" : "真人大厅", 
+    "gameSymbolApi" : "104",
+    "gameCategory" : "Baccarat",
+    "gameAvatar" : ""
+
+}
+
 ### get all user wallets ###
-GET {{url}}/admin/getWallets
+GET {{url}}/admin/get-all-games
 Authorization: Bearer {{token}}
 
 ### get one user wallets ###

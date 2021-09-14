@@ -422,3 +422,58 @@ exports.updateUserProfile = (req, res) => {
         res.json(data.nModified + " Updated User");
     });
 };
+
+
+
+exports.getAllGameList = (req, res) => {
+   
+    const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const category = req.query.catergory;
+    if (category) {
+        gameList.count({}).exec((err, total) => {
+            gameList.find({ $or: [{ gameCategory: { $regex: category, $options: 'i' } }]})
+                    .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'games not found'
+                            });
+                        }
+                        res.json({
+                            "identifier": "get all games", tag,
+                            pagination: tag.length, page, page, total
+                        });
+                    });
+            });
+        } else{
+            gameList.count({}).exec((err, total) => {
+                gameList.find({})
+                .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'games not found'
+                        });
+                    }
+                    res.json({
+                        "identifier": "get all games", tag,
+                        pagination: tag.length, page, page, total
+                    });
+                });
+        });
+    }  
+
+};
+
+exports.getOneGame = (req, res) => {
+    const slug = req.params.slug;
+    gameList.findOne({ gameSymbolApi: slug }).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'product not found'
+            });
+        }
+        res.json({
+            "identifier": "get one game", tag
+        });
+    });
+};

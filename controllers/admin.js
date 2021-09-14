@@ -5,6 +5,7 @@ const shortId = require('shortid');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const RequestWallets = require('../models/wallet_transaction')
+const gameList = require('../models/gameList')
 const _ = require('lodash');
 var moment = require("moment");
 
@@ -402,4 +403,86 @@ exports.getOneWalletRequest = (req, res) => {
             "identifier": "get all user wallet request", allUser
         });
 });
+};
+
+exports.addGameList = (req, res) => {
+
+    const { englishGameName, chineseGameName, gameSymbolApi, gameCategory, gameAvatar} = req.body;
+    let glist = new gameList({englishGameName, chineseGameName, gameSymbolApi, gameCategory, gameAvatar});
+
+
+    glist.save((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: err.errmsg
+            });
+        }
+
+        res.json({"identifier": "Added game data ", data}); // dont do this res.json({ tag: data });
+    });
+};
+
+
+exports.getAllGameList = (req, res) => {
+   
+    const pagination = req.query.pagination ? parseInt(req.query.pagination) : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const category = req.query.catergory;
+    if (category) {
+        gameList.count({}).exec((err, total) => {
+            gameList.find({ $or: [{ gameCategory: { $regex: category, $options: 'i' } }]})
+                    .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'games not found'
+                            });
+                        }
+                        res.json({
+                            "identifier": "get all games", tag,
+                            pagination: tag.length, page, page, total
+                        });
+                    });
+            });
+        } else{
+            gameList.count({}).exec((err, total) => {
+                gameList.find({})
+                .skip((page - 1) * pagination).limit(pagination).exec((err, tag) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'games not found'
+                        });
+                    }
+                    res.json({
+                        "identifier": "get all games", tag,
+                        pagination: tag.length, page, page, total
+                    });
+                });
+        });
+    }  
+
+};
+
+exports.getOneGame = (req, res) => {
+    const slug = req.params.slug;
+    gameList.findOne({ gameSymbolApi: slug }).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'product not found'
+            });
+        }
+        res.json({
+            "identifier": "get one game", tag
+        });
+    });
+};
+
+exports.getGameCategory = (req, res) => {
+    const slug = req.params.slug;
+    gameList.find({ gameCategory: slug }).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'product not found'
+            });
+        }
+    });
 };
