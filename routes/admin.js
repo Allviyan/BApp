@@ -1,7 +1,7 @@
 const { request } = require('express');
 const express = require('express');
 const router = express.Router();
-const { signup, signin, signout, requireSignin, getAllUser, getOneUserWallet, updateOneWallet, getOneWallet, getOnePlayer, getWallets, wallets, updateUser, updatePlayerWalletRequest, getOneWalletRequest, getWalletsRequest, gameAvatar, addGameList, getAllGameList, getOneGame } = require('../controllers/admin');
+const { signup, signin, signout, requireSignin, getAllUser, getOneUserWallet, updateOneWallet, getOneWallet, getOnePlayer, getWallets, wallets, updateUser, updatePlayerWalletRequest, getOneWalletRequest, getWalletsRequest, gameAvatar, addGameList, getAllGameList, getOneGame, updateGame } = require('../controllers/admin');
 const { userList, readUser } = require('../controllers/auth');
 //const { userList, readUser } = require('../controllers/auth');
 // validators
@@ -27,9 +27,9 @@ router.put('/admin/requested/wallet/update/:slug', requireSignin, updatePlayerWa
 router.post('/admin/add-games', requireSignin, addGameList)
 router.get('/admin/get-all-games', requireSignin, getAllGameList)
 router.get('/admin/getOneGame/:slug', requireSignin, getOneGame)
+router.pu('/admin/update-game/:slug', requireSignin, updateGame)
 
 
-addGameList, getAllGameList, getOneGame
 // router.put('/admin/wallet/updateOne/:slug', requireSignin, updateOneWallet)
 
 

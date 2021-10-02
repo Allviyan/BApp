@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzE1MTU0NjksImV4cCI6MTYzMTYwMTg2OX0.sPlnTvZJ0OXEcfBlVRRNxp4ubZyAK2M06Q9CFLFtFTo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzE2MTc3ODMsImV4cCI6MTYzMTcwNDE4M30.f0-WjvfESyMZp7LaplV-xGc_VnQDf2_Mr0O3s96GynE
 
 ## User Registration ##
 POST {{url}}/admin/signup
@@ -62,20 +62,23 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "englishGameName" : "Baccarat Lobby", 
-    "chineseGameName" : "真人大厅", 
-    "gameSymbolApi" : "104",
-    "gameCategory" : "Baccarat",
+    "englishGameName" : "Force 1", 
+    "chineseGameName" : "方程式赛车1", 
+    "gameSymbolApi" : "VPmr9",
+    "gameCategory" : "Video Slots",
     "gameAvatar" : ""
 
 }
 
 ### get all user wallets ###
-GET {{url}}/admin/get-all-games
+GET {{url}}/admin/get-all-games?catergory=Video Slots&pagination=12&page=1
 Authorization: Bearer {{token}}
 
+### get all user wallets ###
+GET {{url}}/admin/getOneGame/vs25wolfgold
+Authorization: Bearer {{token}}
 ### get one user wallets ###
-GET {{url}}/admin/wallet/getOne/60052f7eb813601ee8a66a62
+GET {{url}}/admin/wallet/getOne/613f064dd6a2c824303b7036
 Authorization: Bearer {{token}}
 
 

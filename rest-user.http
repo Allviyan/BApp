@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmNDJiMzAxMDgxOTA4ZTA5ZDgxM2IiLCJpYXQiOjE2MzA4NTE4OTgsImV4cCI6MTYzMDkzODI5OH0.6ccN3yP9hvn5kFeTYIazjtYPFEbupwtFXSlPC5PSj1w
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmNDJiMzAxMDgxOTA4ZTA5ZDgxM2IiLCJpYXQiOjE2MzE2MjAzNjYsImV4cCI6MTYzMTcwNjc2Nn0.0ZJz9bpmrzIqxPCslsqeI_CN0gXNSj0vrS1LfJqH-YE
 
 ## User Registration ##
 POST {{url}}/signup
@@ -104,3 +104,12 @@ Content-Type: application/json
   "mobileNumber": "324234234263",
   "email": "leona.lewis6@gmails.com"
 }
+
+
+###
+GET {{url}}/user/get-all-games?catergory=Video Slots&pagination=12&page=1
+Authorization: Bearer {{token}}
+
+### get all user wallets ###
+GET {{url}}/user/get-one-game/vs25wolfgold
+Authorization: Bearer {{token}}

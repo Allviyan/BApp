@@ -486,3 +486,18 @@ exports.getGameCategory = (req, res) => {
         }
     });
 };
+
+
+exports.updateGame = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    var myquery = { _id: slug }
+    var newV = req.body;
+    gameList.updateOne(myquery, newV).exec((err, tag) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'cant update user'
+            });
+        }
+        res.json("Message: Successfully updated" + slug);
+    });
+};
