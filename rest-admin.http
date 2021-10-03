@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzE2MTc3ODMsImV4cCI6MTYzMTcwNDE4M30.f0-WjvfESyMZp7LaplV-xGc_VnQDf2_Mr0O3s96GynE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIyM2JmMDI1OTIwMzFiZDhkNGJjMjkiLCJpYXQiOjE2MzMxNzk3OTksImV4cCI6MTYzMzI2NjE5OX0.NnLJUQdYtyU0By1PbvCKD0sBbwHqRSx1S9wDiNE4tPI
 
 ## User Registration ##
 POST {{url}}/admin/signup
@@ -68,6 +68,15 @@ Authorization: Bearer {{token}}
     "gameCategory" : "Video Slots",
     "gameAvatar" : ""
 
+}
+###
+
+PUT {{url}}/admin/update-game-id/vswaysbufking
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{  
+    "gameAvatar" : "https://drive.google.com/file/d/1YYSDPP_DxA3DLf3GOtQpyEqcMbfrWSZh/view?usp=sharing"
 }
 
 ### get all user wallets ###

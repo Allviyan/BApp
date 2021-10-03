@@ -21,7 +21,7 @@ exports.signup = (req, res) => {
         }
 
         var active = 0;
-        const { firstName, lastName, mobileNumber, email, password  } = req.body;
+        const { firstName, lastName, mobileNumber, email, password,photo  } = req.body;
         let username = shortId.generate();
         var date = new Date;
         var userId = String(date.getTime()).substring( 4 );;
@@ -30,7 +30,7 @@ exports.signup = (req, res) => {
         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
         let DateCreated = new Date();
         console.log(DateCreated)
-        let newUser = new User({ userId, firstName, lastName, mobileNumber, email, password, profile, username, active, DateCreated});
+        let newUser = new User({ userId, firstName, lastName, mobileNumber, email, password, profile, username,photo, active, DateCreated});
         newUser.save((err, success) => {
             if (err) {
                 return res.status(400).json({
@@ -137,13 +137,13 @@ exports.signin = (req, res) => {
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         res.cookie('token', token, { expiresIn: '1d' });
-        const { _id, username, name, email, userId } = user;
+        const { _id, username, name, email, userId, photo } = user;
         wallets.findOne({ ownerID : userId}).exec((err, userWallet) => {
         const { balance } = userWallet;
      
         return res.json({
             token,
-            user: { _id, username, balance,  name, email, userId }
+            user: { _id, username, balance,  name, email, userId,photo }
         });
     });
     });
