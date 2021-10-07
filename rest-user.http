@@ -1,6 +1,6 @@
 @url = http://localhost:8000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmNDJiMzAxMDgxOTA4ZTA5ZDgxM2IiLCJpYXQiOjE2MzE2MjAzNjYsImV4cCI6MTYzMTcwNjc2Nn0.0ZJz9bpmrzIqxPCslsqeI_CN0gXNSj0vrS1LfJqH-YE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmNDJiMzAxMDgxOTA4ZTA5ZDgxM2IiLCJpYXQiOjE2MzM2MDQ0NzgsImV4cCI6MTYzMzY5MDg3OH0.H7ft24l1xoLtcxKqQT95om6uYeFQQV0xYXACFFGJXQ8
 
 ## User Registration ##
 POST {{url}}/signup
@@ -22,7 +22,7 @@ POST {{url}}/signin
 Content-Type: application/json
 
 {
-   "mobileNumber" : "090788388331",
+   "userName" : "demoCS30",
    "password" : "12345678"
 }
 
@@ -98,11 +98,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
- "userId": "718843360",
-  "firstName": "Leona",
-  "lastName": "lewis",
-  "mobileNumber": "324234234263",
-  "email": "leona.lewis6@gmails.com"
+ "userName": "demoCS30"
 }
 
 

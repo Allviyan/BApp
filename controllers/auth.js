@@ -116,9 +116,32 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-    const { mobileNumber, password } = req.body;
-    // check if user exist
-    console.log("check! " + mobileNumber)
+    const { userName, mobileNumber, password } = req.body;
+    if(userName){
+        User.findOne({ userName }).exec((err, user) => {
+            if (err || !user) {
+                return res.status(400).json({
+                    error: 'User with that mobile does not exist. Please signup.'
+                });
+            }
+            // authenticate
+            if (!user.authenticate(password)) {
+                return res.status(400).json({
+                    error: 'mobile number and password do not match.'
+                });
+            }
+            // generate a token and send to client
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    
+            res.cookie('token', token, { expiresIn: '1w' });
+            const { _id, userName, balance,  name, email, userId, photo } = user;
+            return res.json({
+                token,
+                user: { _id, userName, balance,  name, email, userId,photo }
+            });
+        });
+    } else {
+
     User.findOne({ mobileNumber }).exec((err, user) => {
 
         console.log("dasda", user)
@@ -146,7 +169,9 @@ exports.signin = (req, res) => {
             user: { _id, username, balance,  name, email, userId,photo }
         });
     });
+    
     });
+}
 };
 
 exports.signout = (req, res) => {

@@ -10,7 +10,7 @@ const { runValidation } = require('../validators');
 const { userSignupValidator, userSigninValidator } = require('../validators/auth');
 
 router.post('/signup', userSignupValidator, runValidation, signup);
-router.post('/signin', userSigninValidator, runValidation, signin);
+router.post('/signin', userSigninValidator, signin);
 router.get('/signout', signout);
 
 
@@ -25,6 +25,7 @@ router.put('/user/updateUserWalletRequest/:slug', requireSigninUser, updateUserR
 router.get('/user/getbalance/ppgames/:slug', requireSigninUser, getUserBalance)
 router.post('/user/getgameslink/ppgames', requireSigninUser, getGameLink)
 router.post('/user/reloadPPwallet/ppgames', requireSigninUser, reloadBalancePP)
+
 
 router.get('/user/get-all-games', requireSigninUser, getAllGameList)
 router.get('/user/get-one-game/:slug', requireSigninUser, getOneGame)
