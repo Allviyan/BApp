@@ -7,12 +7,13 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-    "firstName" : "angelo3",
-    "lastName" : "santiago3",
-    "email" : "angelo.santiago3@gmails.com",
-    "mobileNumber" : "090788388331",
+    "firstName" : "angelo4",
+    "lastName" : "santiago4",
+    "email" : "angelo.santiagoss5@gmails.com",
+    "mobileNumber" : "090788388221",
     "referralNumber" : "",
-    "password" : "12345678"
+    "password" : "12345678",
+    "userName" : "angelo1234"
  
 
 }
